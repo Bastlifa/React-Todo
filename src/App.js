@@ -16,6 +16,7 @@ class App extends React.Component {
     this.state = {
       todoData: [],
       currentInputText: "",
+      currentSearchInput: "",
     }
     this.handleTextInput = this.handleTextInput.bind(this)
   }
@@ -28,6 +29,7 @@ class App extends React.Component {
     {
       let tempData = JSON.parse(localStorage.getItem("todoData"))
       this.setState({todoData: tempData})
+      this.setState({displayedTodos: tempData})
     }
   }
 
@@ -41,15 +43,19 @@ class App extends React.Component {
     this.fetchFromLS()
   }
 
-  componentDidUpdate()
+  componentDidUpdate(prevState)
   {
-    this.pushToLS()
+    if (this.state.todoData !== prevState.todoData) this.pushToLS()
   }
 
   handleTextInput(event)
   {
     this.setState({currentInputText: event.target.value})
-    console.log(this.state.currentInputText)
+  }
+
+  handleSearchInput = event =>
+  {
+    this.setState({currentSearchInput: event.target.value})
   }
 
   addTodo = event =>
@@ -68,7 +74,7 @@ class App extends React.Component {
     
   }
 
-  clearCompleted = event =>
+  clearCompleted = _ =>
   {
     let tempTodos = this.state.todoData.filter(todo => todo.completed === false)
     this.setState({todoData: tempTodos})
@@ -83,6 +89,8 @@ class App extends React.Component {
   }
 
   render() {
+    const { todoData, currentSearchInput } = this.state
+    const displayedTodos = todoData.filter(todo => todo.task.toLowerCase().includes(currentSearchInput))
     return (
       <AppContainer>
         <br />
@@ -91,11 +99,12 @@ class App extends React.Component {
           handleTextInput={this.handleTextInput} 
           currentInputText={this.state.currentInputText} 
           addTodo={this.addTodo}
-          todoData={this.state.todoData}
           clearCompleted={this.clearCompleted}
+          handleSearchInput={this.handleSearchInput}
+          currentSearchInput={this.state.currentSearchInput}
         />
         <TodoList 
-          todoData={this.state.todoData} 
+          todoData={displayedTodos} 
           toggleCompleted={this.toggleCompleted}
         />
         

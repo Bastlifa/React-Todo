@@ -12,13 +12,13 @@ export const StyledForm = styled.form`
     input
     {
         box-sizing: border-box;
-        padding-right: 10px;
+        
         max-width: ${formElMaxWidth};
         font-size: ${formElFontSize};
         border-radius: ${formElBorderRad};
         border: 2px solid gray;
         margin-bottom: ${formElMarginBot};
-        text-align: right;
+        text-align: center;
     }
 
     button
