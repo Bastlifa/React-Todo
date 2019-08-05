@@ -83,6 +83,7 @@ class App extends React.Component {
 
   toggleCompleted = (event, todoID) =>
   {
+    event.stopPropagation()
     event.target.classList.toggle("completed")
     let tempTodos = this.state.todoData.map(todo => todo.id === todoID ? ({...todo, completed: !todo.completed}) : todo )
     this.setState({todoData: tempTodos})
