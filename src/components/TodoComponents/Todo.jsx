@@ -8,8 +8,8 @@ const Todo = (props) =>
     const { todo, toggleCompleted, compClass } = props
 
     return (
-        <TodoH2Div onClick={event => toggleCompleted(event, todo.id)} className={compClass}>
-            <TodoH3>{todo.task}</TodoH3>
+        <TodoH2Div onClick={event => toggleCompleted(event, todo.id)} className={compClass} >
+            <TodoH3 data-cy="todo-h3">{todo.task}</TodoH3>
         </TodoH2Div>
     )
 }
